@@ -1,45 +1,44 @@
-import SpriteSheet from './SpriteSheet.js';
-import {loadImage, loadJSON} from './loader.js';
-
-function drawBackground(backgrounds, context, sprites) {
-        for (const comp of  backgrounds) {
-            const range = comp.ranges[0];
-            for (let i= range[0]; i < range[1]; i++) {
-                for (let j = range[2] ; j < range[3]; j++) {
-                    sprites.drawTiles(comp.tiles, context, i, j);
-
-                }
-            }
-
-            }
-    }
-
-    // json.array.forEach(element => {
-        
-    // });
-// }
-
+import Compositor from './Compositor.js'
+import {loadJSON} from './loader.js';
+import {loadMarioSprite, loadBackgroundSprite} from './Sprite.js'
+import {createBackgroundLayer} from './Layers.js'
 
 const canvas = document.getElementById('screen');
 const context = canvas.getContext('2d');
 
 
-loadImage('/img/tiles.png')
-.then(image => {
-    const sprites = new SpriteSheet(image, 16, 16);
-    sprites.define("ground", 0, 0);
-    sprites.define('sky', 3, 23);
-    loadJSON('1-1')
-    .then(json => {
-        drawBackground(json.backgrounds, context, sprites);
-        } )
-
-
-    for(let i=0; i<25; i++) {
-        for(let j=12; j<14; j++) {
-            sprites.drawTiles('ground', context, i, j);
-
-        }
+function createSpriteLayer(sprite, pos) {
+    return function drawSpriteLayer(context) {
+        sprite.draw("idleMario", context, pos.x, pos.y);
     }
+}
 
+// Parallel Loading of Sprites using Promise all
+Promise.all([
+    loadMarioSprite(),
+    loadBackgroundSprite(),
+    loadJSON('1-1')
+
+])
+.then(([marioSprite, backgroundSprite, response]) => {
+
+    const comp = new Compositor();
+
+    const backgroundLayer = createBackgroundLayer(response.backgrounds, backgroundSprite);
+    comp.layers.push(backgroundLayer);
+    const pos = {
+        x: 64,
+        y: 65
+    };
+    const spriteLayer = createSpriteLayer(marioSprite, pos);
+    comp.layers.push(spriteLayer);
+function update() {
+    comp.draw(context);
+    marioSprite.draw("idleMario", context, pos.x, pos.y);
+    pos.x += 4;
+    pos.y += 4;
+    requestAnimationFrame(update);
+
+}
+update();
 });
