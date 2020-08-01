@@ -1,5 +1,14 @@
 import SpriteSheet from './SpriteSheet.js'
 import {loadImage} from './loader.js'
+/* 
+* It is a game specific file whwre we have crteate function to load different component 
+*/
+
+
+
+/* 
+* Loading  chracter from spritesheet as per now
+*/
 export function loadMarioSprite() {
     return loadImage('/img/characters.png')
     .then(image => {
@@ -9,6 +18,10 @@ export function loadMarioSprite() {
 
 });
 }
+
+/* 
+* Loading backgorund spriteSheet  
+ */
 export function loadBackgroundSprite() {
     return loadImage('/img/tiles.png')
     .then(image => {

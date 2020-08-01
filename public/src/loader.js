@@ -9,6 +9,9 @@ export function loadImage(url) {
     });
 }
 
+/* 
+* A utility function to add JSON
+*/
 export function loadJSON(name) {
     return fetch(`/levelJSON/${name}.json`)
     .then(response => response.json());
