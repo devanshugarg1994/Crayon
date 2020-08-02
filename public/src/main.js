@@ -4,6 +4,8 @@ import {loadMarioSprite, loadBackgroundSprite} from './Sprite.js'
 import {createBackgroundLayer, createSpriteLayer} from './Layers.js'
 import {createMario} from './entities.js'
 import Timer from './Timer.js'
+import KeyboardState from './KeyBoardState.js'
+
 const canvas = document.getElementById('screen');
 const context = canvas.getContext('2d');
 
@@ -21,19 +23,29 @@ Promise.all([
 
     const backgroundLayer = createBackgroundLayer(response.backgrounds, backgroundSprite);
     comp.layers.push(backgroundLayer);
-    const gravity = 30;
+    const gravity = 2000;
     mario.pos.set(64, 180);
-    mario.vel.set(300, -600);
 
     const spriteLayer = createSpriteLayer(mario);
     comp.layers.push(spriteLayer);
-
+    // Adding KEy and there response
+    const input = new KeyboardState();
+    input.addMapping(32, keyState => {
+        if (keyState) {
+            mario.jump.start();
+        } else {
+            mario.jump.cancel();
+        }
+    })
+    input.listenTo(window);
     const timer = new Timer();
     // Defining the update require in every frame
+    // We only define it. It is called from Timer class
     timer.update = function update(deltaTime) {
-        comp.draw(context);
         mario.update(deltaTime);
-        mario.vel.y +=gravity;
+        comp.draw(context);
+
+        mario.vel.y +=gravity * deltaTime;
 
     }
     // Start Rendering It will also call update function which is call on every frame to update the screen

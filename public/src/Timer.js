@@ -15,7 +15,7 @@ export default class Timer {
         // It is private function declare and define in constructor
         // It is make private to avoid overriding of the function
         this.proxyUpdate = (time) => {
-            acumulatedTime += (time - lastTime) / 1000;
+            acumulatedTime += (time - lastTime) / 1500;
             
             while(acumulatedTime > deltaTime) {
                 this.update(deltaTime);
@@ -43,6 +43,7 @@ export default class Timer {
     */
     update(deltaTime) {
         // Nedd to define at game Level
+        console.warn('Unhandled update call in Timer');
     }
 
 
