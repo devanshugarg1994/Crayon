@@ -14,3 +14,7 @@ A light weight game engine to create game on canvas using JavaScript<br/><br/>
 Here we have create a class Timer which will take care of the framerate of the game running on diffrent machine with different refresh rate.
 Also We have abstratcted the update method and requestanimationframe into class Timer
 Now just have to mentioned the changes and call start to render and update the game.
+<br><br>
+[KeyBoardInput and Traits](../../tree/dc47bebf8f5c80a7fe9dcc11da0c15f9606eb00b)<br/>
+
+<img src="https://github.com/devanshugarg1994/Crayon/blob/master/Docs/Jump.png" />
