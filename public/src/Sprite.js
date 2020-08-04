@@ -1,10 +1,8 @@
 import SpriteSheet from './SpriteSheet.js'
 import {loadImage} from './loader.js'
 /* 
-* It is a game specific file whwre we have crteate function to load different component 
+* It is a game specific file where we have create function to load different component 
 */
-
-
 
 /* 
 * Loading  chracter from spritesheet as per now
