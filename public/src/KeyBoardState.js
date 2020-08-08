@@ -6,13 +6,13 @@ export default class KeyBoardState {
         // Hold the current state of a given key 
         this.keyStates = new Map();
 
-        // Hold the keyCode and coresponding callback function
+        // Hold the code and coresponding callback function
         this.keyMap = new Map();
     }
 
     // Mapping the keys with there callbavk and store them
-    addMapping(keyCode, callback) {
-        this.keyMap.set(keyCode, callback);
+    addMapping(code, callback) {
+        this.keyMap.set(code, callback);
         console.log(this.keyMap);
     }
 
@@ -21,9 +21,9 @@ export default class KeyBoardState {
     handleEvent(event) {
 
 
-        const {keyCode} = event;
+        const {code} = event;
         // If key is not registered with any callback then just return as We didn't need to do anything
-        if(!this.keyMap.has(keyCode)) {
+        if(!this.keyMap.has(code)) {
             return;
         }
         // IF key is registered with any callback then first stopping the Default bheaviour (Bubling nad capturing)
@@ -37,14 +37,14 @@ export default class KeyBoardState {
         * to stop callback from running we check the state of the key.
         * If it is same as previous we do not do anything and if not we call the callback 
         */
-        if(this.keyStates.get(keyCode) === keyState) {
+        if(this.keyStates.get(code) === keyState) {
             return;
         }
 
         // Now if not return means state is changed. We have to update the state in Map and call callbackfunction
-        this.keyStates.set(keyCode, keyState);
+        this.keyStates.set(code, keyState);
 
-        this.keyMap.get(keyCode)(keyState);
+        this.keyMap.get(code)(keyState);
 
 
     }

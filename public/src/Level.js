@@ -3,12 +3,14 @@ import {Matrix} from './math.js';
 import TileCollider from './TileCollider.js';
 export default class Level {  
     constructor() {
+        this.gravity = 2000;
+
         // Layering the componenet need to draw
         this.comp = new Compositor(); 
         // Unique Entity used in Game level
         this.entities = new Set();
         // Dividing whole game scene into tiles to detect collision
-        this.tiles = new Matrix; 
+        this.tiles = new Matrix(); 
         //
         this.tileCollider = new TileCollider(this.tiles);
     }
@@ -22,6 +24,8 @@ export default class Level {
 
             entity.pos.y += entity.vel.y * deltaTime;
             this.tileCollider.checkY(entity);
+            entity.vel.y += this.gravity * deltaTime;
+
         });
     }
 
