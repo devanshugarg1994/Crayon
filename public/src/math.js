@@ -23,6 +23,9 @@ export class Vec2 {
 
 /* 
 * Matrix class
+* Here x-axis represent column (not row). 
+* Here y-axis represent row (not column). 
+* We use smart mapping.
 */
 
 export class Matrix {
@@ -38,10 +41,11 @@ export class Matrix {
         });
     }
     set(x, y, value) {
+        // First check the column present or not
         if (!this.grid[x]) {
             this.grid[x] = [];
         }
-
+        // adding the y-axis
         this.grid[x][y] = value;
     }
 
