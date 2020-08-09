@@ -14,9 +14,9 @@ export default class Compositor {
     *  Layeres are drawn in order in which they are pushed
     *  i.e.. the layer added first is draw first and the layer added last draw at last
     */
-    draw(context) {
+    draw(context, camera) {
         this.layers.forEach(layer => {
-            layer(context);
+            layer(context, camera);
         });
     }
 }
