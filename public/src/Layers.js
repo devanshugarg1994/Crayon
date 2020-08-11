@@ -6,6 +6,8 @@
 * sprite ---- refernce to loaded image which refer to draw (Basic tile)
 */
 export function createBackgroundLayer(level, sprites) {
+
+    // TODO rename the buffer as sceneBuffer
     const tiles = level.tiles;
     const resolver = level.tileCollider.tiles;
     const buffer =  document.createElement("canvas");

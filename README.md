@@ -25,15 +25,24 @@ We have create 2 classes TIleCollider and TileResolver <br/>
 TileResolver : contain function that connvert or map position into scene matrix indexes and vice versa.<br/>
 TileCollider : Contain TileResolver instance as a data member and logic of collision.<br/>
 Level contain TileCollider instance as data memeber and check for collision for evey frame.<br/><br/>
+
 [Collision Optimize and Refactor](../../tree/66d6b24860ad27d7126ef365be8e5cd99cdb376f)<br/>
 Now we will only check boder of entity (mario) for collision.<br/>
 [Camera](../../tree/98ef68f066d872b97e7ad9ec170ccd962e24024c)<br/>
 Added Camera component. Camera is just component which determine the position on the canvas of other component to be darwn like background ,entity (mario). <br/>
 When camera shift we just shift the position of other component accordingly.
 <br/>
+
 [JSON Restructure and Spriteloader Refactor](../../tree/b69ea8fe92bf7ed4a02c51fd53ebc86bb066ee76)<br/>
 JSON is restructured to store the data more efficiently.<br/>
 A utility function to load spriteSheet which take basic information from JSON
+<br/>
+
+[Scrolling X-axis](../../tree/d0bba6891d8b7ac9893ffc4578d2d2403dff3712)<br/>
+We have taken 16 pixel buffer. We render the scene and when camera is moved we check the index (map with matrix)
+and use the new indexes to update the scene buffer.<br/>
+When we update scene Buffer we change x co-ordinate such that every time tile are drawn from (0, 0) on scene buffer, then this scene buffer is render on the screen on draw call.<br/>
+When we draw the scene Buffer on screen we check for camera position. if it become more than mod 16 we free the buffer part which is not visible and this part is used to draw the new (upcoming) tiles.
 <br/>
 
 
