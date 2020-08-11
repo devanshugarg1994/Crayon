@@ -13,7 +13,6 @@ export default class KeyBoardState {
     // Mapping the keys with there callbavk and store them
     addMapping(code, callback) {
         this.keyMap.set(code, callback);
-        console.log(this.keyMap);
     }
 
     // function called when any key is PRESSED or RELEASED

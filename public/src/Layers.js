@@ -6,20 +6,50 @@
 * sprite ---- refernce to loaded image which refer to draw (Basic tile)
 */
 export function createBackgroundLayer(level, sprites) {
+    const tiles = level.tiles;
+    const resolver = level.tileCollider.tiles;
     const buffer =  document.createElement("canvas");
-    buffer.width = 640;
-    buffer.height = 640;
+    buffer.width = 256 + 16;
+    buffer.height = 240;
     const context = buffer.getContext("2d");
-    level.tiles.iterate((tile, x, y) => {
-            sprites.drawTiles(tile.name, context, x, y)
-    });
- 
+
+    /* 
+    * A private function which is used to draw tiles (store in sprites object offer)
+    * on buffer (actual scene formed using matrix data and buffer)
+    * As Camera poistion change we change the data in buffer and then redraw the background
+    * 
+    */
+
+    let startIndex, endIndex;
+    function redraw(drawFrom, drawTo) {
+
+        // function is run for first time 
+        // After that it check if camera is moving or position of camera is change
+        if(startIndex === drawFrom && endIndex === drawTo) {
+            return;
+        }
+        startIndex = drawFrom;
+        endIndex = drawTo;
+        for(let x = startIndex; x <= endIndex; ++x) {
+            const col = tiles.grid[x];
+            if (col) {
+                col.forEach((tile, y) => {
+                    sprites.drawTiles(tile.name, context, x - startIndex, y)
+                });
+            }
+        }
+    }
     
     /*  Returning Draw function that will actually draw it on the screen
     *   @param context --- draw the image w.r.t to passed context
     */
     return function drawBackgroundLayer(context, camera) {
-        context.drawImage(buffer, -camera.pos.x, -camera.pos.y);
+        const drawWidth = resolver.toIndex(camera.size.x);
+        const drawFrom = resolver.toIndex(camera.pos.x);
+        const drawTo = drawFrom + drawWidth;
+        redraw(drawFrom, drawTo);
+        // actual drawing on the screen.
+        context.drawImage(buffer, -camera.pos.x % 16, -camera.pos.y);
     }
 }
 
@@ -40,10 +70,10 @@ export function createSpriteLayer(entities, width = 64, height = 64) {
             context.drawImage(spriteBuffer,
                 entity.pos.x - camera.pos.x,
                 entity.pos.y - camera.pos.y);
-
         });
     }
-} 
+}
+
 /* 
 * Ceare a HOC function 
 */
@@ -81,4 +111,18 @@ export function createCollisionLayer(level) {
         })
         resolvedTiles.length = 0;
     }
+}
+
+export function createCameraLayer(cameraToDraw) {
+    return function drawCameraRect(context, fromCamera) {
+        context.strokeStyle = 'purple';
+        context.beginPath();
+        context.rect(
+            cameraToDraw.pos.x - fromCamera.pos.x,
+            cameraToDraw.pos.y - fromCamera.pos.y,
+            cameraToDraw.size.x,
+            cameraToDraw.size.y);
+            context.stroke();
+    }
+
 }

@@ -55,7 +55,8 @@ function createTiles(level, backgrounds) {
         for (let x = xStart; x < xEnd; ++x) {
             for (let y = yStart; y < yEnd; ++y) {
                 level.tiles.set(x, y, {
-                    name: background.tiles,
+                    name: background.tile,
+                    type: background.type
                 });
             }
         }
@@ -95,7 +96,6 @@ export function loadLevel(name) {
 
         const spriteLayer = createSpriteLayer(level.entities);
         level.comp.layers.push(spriteLayer);
-        console.log(level)
         return level;    
     });
 }

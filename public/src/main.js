@@ -1,7 +1,7 @@
 import Timer from './Timer.js';
 import {loadLevel} from './loader.js';
 import {createMario} from './entities.js';
-import {createCollisionLayer} from './layers.js';
+import {createCollisionLayer, createCameraLayer} from './layers.js';
 import setUpKeyBoard from './SetUpKeyboard.js'
 import Camera from './Camera.js'
 import setUpMouseControl from './Debug.js';
@@ -21,7 +21,8 @@ Promise.all([
     window.camera = camera;
     mario.pos.set(64, 64);
 
-    level.comp.layers.push(createCollisionLayer(level));
+    level.comp.layers.push(createCollisionLayer(level),
+                        createCameraLayer(camera));
 
     level.entities.add(mario);
 
