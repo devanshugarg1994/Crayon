@@ -12,7 +12,6 @@ export default function setUpMouseControl (canvas, entity, camera) {
                 && lastEvent && lastEvent.buttons === 2
                 && lastEvent.type === 'mousemove') {
                 camera.pos.x -= event.offsetX - lastEvent.offsetX;
-                console.log(camera)
             }
             lastEvent = event;
         });

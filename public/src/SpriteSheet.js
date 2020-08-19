@@ -9,8 +9,17 @@ export default class SpriteSheet {
         this.width = width;
         this.height = height;
         this.tiles = new Map();
+        this.animations = new Map();
     }
-
+    /* 
+    * Defining the animation
+    * @param: ----  name : Name of the animation define in JSON spritesheet
+    *               animation : A callback function which is called on every draw
+    *                            call and return which frame to render on the screen
+    */
+    defineAnim(name, animation) {
+        this.animations.set(name, animation);
+    }
     /* 
     ** Here we define the image frame after the image is loaded and draw it to another canvas (preloading).
     * @name is the refrence name to the frame of the sprite we want draw.
@@ -18,12 +27,20 @@ export default class SpriteSheet {
     * @y It is the position of y cliping need to crop from sprite. it is just the position of the frame with refrence to other frame.
     */
     define(name, x, y, width, height) {
+        const buffers = [false, true].map(flip => {
+            
         const buffer = document.createElement('canvas');
         buffer.width = width;
         buffer.height = height;
-        buffer.getContext('2d').drawImage(this.image, x , y ,  width , height, 0, 0, width, height);
-        this.tiles.set(name, buffer);
-        const canvas = document.getElementById('screen');
+        const context = buffer.getContext('2d');
+        if (flip) {
+        context.scale(-1, 1);
+        context.translate(-width, 0)
+        }
+        context.drawImage(this.image, x , y ,  width , height, 0, 0, width, height);
+        return buffer;
+        });
+        this.tiles.set(name, buffers);
     }
     
     defineTile(name , x, y) {
@@ -36,11 +53,15 @@ export default class SpriteSheet {
     * @y y-position of the image on canvas using context
     */
 
-    draw(name, context, x, y) {
-        const buffer = this.tiles.get(name);
+    draw(name, context, x, y, flip = false) {
+        const buffer = this.tiles.get(name)[flip ? 1: 0];
         context.drawImage(buffer, x, y); 
     }
+    drawAnim(name, context, x, y, distance){
+        const animation = this.animations.get(name);
+        this.draw(animation(distance), context, x * this.width, y * this.height); 
 
+    }
     /* 
     *This function is used when we want to draw a frame multiple times (continuously) like tile 
     */

@@ -4,7 +4,8 @@ import TileCollider from './TileCollider.js';
 export default class Level {  
     constructor() {
         this.gravity = 2000;
-
+        // total time in the level 
+        this.totalTime = 0;
         // Layering the componenet need to draw
         this.comp = new Compositor(); 
         // Unique Entity used in Game level
@@ -27,6 +28,8 @@ export default class Level {
             entity.vel.y += this.gravity * deltaTime;
 
         });
+
+        this.totalTime += deltaTime;
     }
 
 }

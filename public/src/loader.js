@@ -1,9 +1,12 @@
 import Level from './Level.js';
-import {createBackgroundLayer, createSpriteLayer} from './Layers.js';
+import { createBackgroundLayer, createSpriteLayer } from './Layers.js';
 import SpriteSheet from './SpriteSheet.js'
+import createAnim from './Anim.js'
 
 
-/* A utility functiuon to load image */
+/* 
+* A utility functiuon to load image
+*/
 export function loadImage(url) {
     return new Promise(resolve => {
         const image = new Image();
@@ -14,31 +17,47 @@ export function loadImage(url) {
     });
 }
 
-
 /* 
 * A utility function to add JSON
 */
 export function loadJSON(url) {
     return fetch(url)
-    .then(response => response.json());
+        .then(response => response.json());
 }
+
+
 /* 
 * A utility function to load SpriteSheet 
 */
 export function loadSpriteSheet(name) {
     return loadJSON(`/sprites/${name}.json`)
-        .then(sheetSpec => 
+        .then(sheetSpec =>
             Promise.all([
                 sheetSpec,
                 loadImage(sheetSpec.imageURL)
             ]))
         .then(([sheetSpec, image]) => {
+            // To-Do
+            // In case of variable tile size we have to update
             const sprites = new SpriteSheet(image, sheetSpec.tileW, sheetSpec.tileH);
-            sheetSpec.tiles.forEach(tileSpec => {
-                sprites.defineTile(tileSpec.name, tileSpec.index[0], tileSpec.index[1]);
 
-            });
-
+            if (sheetSpec.tiles) {
+                sheetSpec.tiles.forEach(tileSpec => {
+                    sprites.defineTile(tileSpec.name, tileSpec.index[0], tileSpec.index[1]);
+                });
+            }
+            if (sheetSpec.frames) {
+                sheetSpec.frames.forEach(frameSpec => {
+                    sprites.define(frameSpec.name, ...frameSpec.rect);
+                });
+            }
+            if (sheetSpec.animations) {
+                sheetSpec.animations.forEach(animSpec => {
+                    const animation = createAnim(animSpec.frames, animSpec.frameLen);
+                    sprites.defineAnim(animSpec.name, animation);
+                });
+            }
+            console.log(sprites);
             return sprites;
         })
 
@@ -46,7 +65,8 @@ export function loadSpriteSheet(name) {
 }
 
 /* 
-* It is function that is used data define in JSON to create tile and map them to a matrix (Need to update how it's further) 
+* It is function that is used data define in JSON to create tile 
+* and map them to a matrix (Need to update how it's further) 
 */
 function createTiles(level, backgrounds) {
     function applyRange(background, xStart, xLen, yStart, yLen) {
@@ -83,19 +103,19 @@ function createTiles(level, backgrounds) {
 * A loading function which load everything needed in the level
 */
 export function loadLevel(name) {
-    return  loadJSON(`/levelJSON/${name}.json`)
-    .then(levelSpec => Promise.all([
-        levelSpec,
-        loadSpriteSheet(levelSpec.levelName)
-    ]))
-    .then(([levelSpec, backgroundSprite]) => { 
-        const level = new Level();
-        createTiles(level, levelSpec.backgrounds);
-        const backgroundLayer = createBackgroundLayer(level, backgroundSprite);
-        level.comp.layers.push(backgroundLayer);
+    return loadJSON(`/levelJSON/${name}.json`)
+        .then(levelSpec => Promise.all([
+            levelSpec,
+            loadSpriteSheet(levelSpec.levelName)
+        ]))
+        .then(([levelSpec, backgroundSprite]) => {
+            const level = new Level();
+            createTiles(level, levelSpec.backgrounds);
+            const backgroundLayer = createBackgroundLayer(level, backgroundSprite);
+            level.comp.layers.push(backgroundLayer);
 
-        const spriteLayer = createSpriteLayer(level.entities);
-        level.comp.layers.push(spriteLayer);
-        return level;    
-    });
+            const spriteLayer = createSpriteLayer(level.entities);
+            level.comp.layers.push(spriteLayer);
+            return level;
+        });
 }
