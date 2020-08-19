@@ -44,6 +44,10 @@ and use the new indexes to update the scene buffer.<br/>
 When we update scene Buffer we change x co-ordinate such that every time tile are drawn from (0, 0) on scene buffer, then this scene buffer is render on the screen on draw call.<br/>
 When we draw the scene Buffer on screen we check for camera position. if it become more than mod 16 we free the buffer part which is not visible and this part is used to draw the new (upcoming) tiles.
 <br/>
+[Basic Animation](../../tree/4d3e6beb220ff3ca9200a1d8d334ad77271ea850)<br/>
+Created a function which return the callback which when called(callback) return the frame (of the animation)
+depending on the timeElapsed in the game(level.TotalTime) or distance cover by character(in case of mario).
+<br/>
 
 
 
