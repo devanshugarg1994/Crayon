@@ -15,7 +15,11 @@ export function createMario() {
 
             //changing frame on basis of mario movement
             function routeframe(mario) {
-                if (mario.go.direction !== 0) {
+                if (mario.go.distance > 0) {
+                    // Returning Sliding frame of mario when direction of movement is change 
+                    if ((mario.vel.x > 0 && mario.go.direction < 0 ) || (mario.vel.x < 0 && mario.go.direction > 0)){
+                        return 'break';
+                    }
                     return runAnim(mario.go.distance);
                 }
                 return 'idle';

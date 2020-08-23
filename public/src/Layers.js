@@ -6,7 +6,6 @@
 * sprite ---- refernce to loaded image which refer to draw (Basic tile)
 */
 export function createBackgroundLayer(level, sprites) {
-
     // TODO rename the buffer as sceneBuffer
     const tiles = level.tiles;
     const resolver = level.tileCollider.tiles;
@@ -14,17 +13,14 @@ export function createBackgroundLayer(level, sprites) {
     buffer.width = 256 + 16;
     buffer.height = 240;
     const context = buffer.getContext("2d");
-
     /* 
     * A private function which is used to draw tiles (store in sprites object)
     * on buffer (actual scene formed using matrix data and buffer)
     * As Camera position change we change the data in buffer and then redraw the background
     * 
     */
-
     let startIndex, endIndex;
     function redraw(drawFrom, drawTo) {
-
         // function is run for first time 
         // After that it check if camera is moving or position of camera is change
         // if (startIndex === drawFrom && endIndex === drawTo) {
@@ -41,7 +37,7 @@ export function createBackgroundLayer(level, sprites) {
                         sprites.drawAnim(tile.name, context, x - startIndex, y, level.totalTime);
 
                     } else {
-                    sprites.drawTiles(tile.name, context, x - startIndex, y)
+                        sprites.drawTiles(tile.name, context, x - startIndex, y)
                     }
                 });
             }
@@ -63,7 +59,7 @@ export function createBackgroundLayer(level, sprites) {
 
 /* 
 * Draw simple entity on screen 
-* @param entity --- passed the instance of etity thhat we need draw
+* @param entity --- passed the instance of entity that we need draw
 */
 export function createSpriteLayer(entities, width = 64, height = 64) {
     const spriteBuffer = document.createElement('canvas');
@@ -83,14 +79,12 @@ export function createSpriteLayer(entities, width = 64, height = 64) {
 }
 
 /* 
-* Ceare a HOC function 
+* Create a HOC function 
 */
 export function createCollisionLayer(level) {
     const resolvedTiles = [];
-
     const tileResolver = level.tileCollider.tiles;
     const tileSize = tileResolver.tileSize;
-
     const getByIndexOriginal = tileResolver.getByIndex;
     // Overrided the functon to store poistion when it call a every frame from Level class from update method
     // We are storing poistion of entity (mario) at every frame and then calling original function.

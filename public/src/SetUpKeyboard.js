@@ -1,7 +1,7 @@
 import KeyBoardState from './KeyBoardState.js'
 export default function setUpKeyBoard(entity) {
     // Adding Key and there response
-    const input = new KeyBoardState ();
+    const input = new KeyBoardState();
     input.addMapping("Space", keyState => {
         if (keyState) {
             entity.jump.start();
@@ -10,10 +10,15 @@ export default function setUpKeyBoard(entity) {
         }
     });
     input.addMapping("ArrowRight", keyState => {
-        entity.go.direction = keyState;
+        // We are adding keyState here to negate the the multiple key pressed at the same time.
+        entity.go.direction += keyState ? 1 : -1;
+        console.log( entity.go.direction, "right");
     });
     input.addMapping("ArrowLeft", keyState => {
-        entity.go.direction = -keyState;
+        // We are adding keyState here to negate the the multiple key pressed at the same time.
+        entity.go.direction += keyState ? -1 : 1;
+        console.log( entity.go.direction, "ArrowLeft");
+
     });
 
     return input;
