@@ -53,7 +53,10 @@ depending on the timeElapsed in the game(level.TotalTime) or distance cover by c
 [Mario Drag and it's Animation](../../tree/1e3a3fe47a37717ec50c077dec873d44f6657e4a)<br/>
 We have change mario constant speed on button press with a acceleration from 0 speed. We are dragging the mario on every
 update call which depend on the speed.
-Also A break frame is also added when mario instantaneously change it's diection. 
+Also A break frame is also added when mario instantaneously change it's direction. 
+<br/>
+[Mario Mechanics](../../tree/61b297b11f3c11ca9f3bcbbb2031d263b8ffc767)<br/>
+Mario Jump Improve
 <br/>
 
 
