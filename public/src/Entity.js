@@ -1,11 +1,19 @@
 import {Vec2} from './math.js'
 
-
+export const Sides = {
+    TOP: Symbol('top'),
+    BOTTOM: Symbol('bottom')
+}
 export class Trait {
     constructor(name) {
         this.NAME = name
     }
 
+    // Needed to define in subclass if we want handle obstruct for that trait.
+    obstruct () {
+        console.warn('Unhandled update call in Trait');
+
+    }
     update () {
         console.warn('Unhandled update call in Trait');
     }
@@ -28,6 +36,11 @@ export class Entity {
         this[trait.NAME] = trait; 
     }
 
+    obstruct (side) {
+        this.tarits.forEach(trait => {
+            trait.obstruct(this, side);
+        });
+    }
     update(deltaTime) {
         this.tarits.forEach(trait => {
             trait.update(this, deltaTime);

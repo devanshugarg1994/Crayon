@@ -3,7 +3,7 @@ import {Matrix} from './math.js';
 import TileCollider from './TileCollider.js';
 export default class Level {  
     constructor() {
-        this.gravity = 2000;
+        this.gravity = 1500;
         // total time in the level 
         this.totalTime = 0;
         // Layering the componenet need to draw

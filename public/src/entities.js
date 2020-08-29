@@ -3,6 +3,8 @@ import Jump from './traits/Jump.js';
 import Go from "./traits/Go.js";
 import {loadSpriteSheet} from "./loader.js";
 import createAnim from './Anim.js'
+const SLOW_DRAG = 1/6000;
+const FAST_DRAG = 1/10000;
 
 export function createMario() {
     return loadSpriteSheet('mario')
@@ -11,10 +13,18 @@ export function createMario() {
             mario.size.set(14, 16);
             mario.addTrait(new Go());
             mario.addTrait(new Jump());
-            const runAnim = createAnim(['run-1', 'run-2', 'run-3'], 10);
+            const runAnim = createAnim(['run-1', 'run-2', 'run-3'], 8);
 
+            mario.turbo = function setTurro(turboOn) {
+                this.go.dragFactor = turboOn ? FAST_DRAG : SLOW_DRAG;
+            }
             //changing frame on basis of mario movement
             function routeframe(mario) {
+
+                // Returning frame if mario is Air as `ready 
+                if (mario.jump.falling) {
+                    return 'jump';
+                }
                 if (mario.go.distance > 0) {
                     // Returning Sliding frame of mario when direction of movement is change 
                     if ((mario.vel.x > 0 && mario.go.direction < 0 ) || (mario.vel.x < 0 && mario.go.direction > 0)){
