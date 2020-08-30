@@ -42,7 +42,7 @@ export default class Timer {
     * and make sure game  behave same in different frame rate like 15fps, 30fps, 60fps, 144fps
     */
     update(deltaTime) {
-        // Nedd to define at game Level
+        // Need to define at game Level
         console.warn('Unhandled update call in Timer');
     }
 

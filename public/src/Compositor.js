@@ -5,9 +5,8 @@ export default class Compositor {
     constructor() {
         /* 
         * For addding layers 
-         */
+        */
         this.layers = [];
-
     }
     /* 
     *  Draw layers w.r.t. to there context.

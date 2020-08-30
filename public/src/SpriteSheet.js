@@ -21,7 +21,7 @@ export default class SpriteSheet {
         this.animations.set(name, animation);
     }
     /* 
-    ** Here we define the image frame after the image is loaded and draw it to another canvas (preloading).
+    ** Here we define the image frame after the image is loaded and draw it to another canvas (preRendering).
     * @name is the refrence name to the frame of the sprite we want draw.
     * @x It is the position of x cliping need to crop from sprite. it is just the position of the frame with refrence to other frame.
     * @y It is the position of y cliping need to crop from sprite. it is just the position of the frame with refrence to other frame.

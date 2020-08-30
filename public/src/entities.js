@@ -14,13 +14,14 @@ export function createMario() {
             mario.addTrait(new Go());
             mario.addTrait(new Jump());
             const runAnim = createAnim(['run-1', 'run-2', 'run-3'], 8);
-
+            /* 
+            * If Trubo Mode is on we just reudce the Drag Factor
+            */
             mario.turbo = function setTurro(turboOn) {
                 this.go.dragFactor = turboOn ? FAST_DRAG : SLOW_DRAG;
             }
             //changing frame on basis of mario movement
             function routeframe(mario) {
-
                 // Returning frame if mario is Air as `ready 
                 if (mario.jump.falling) {
                     return 'jump';
@@ -36,8 +37,7 @@ export function createMario() {
             }
             mario.draw = function drawMario(context) {
                 sprite.draw(routeframe(this), context, 0, 0, (mario.go.heading < 0));
-            } 
-
+            }
             return mario;
         });
 

@@ -80,7 +80,7 @@ function createTiles(level, backgrounds) {
                 });
             }
         }
-    }
+    } 
     backgrounds.forEach(background => {
         background.ranges.forEach(range => {
             if (range.length === 4) {

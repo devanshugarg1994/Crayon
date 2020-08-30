@@ -16,15 +16,24 @@ export default class Level {
         this.tileCollider = new TileCollider(this.tiles);
     }
 
+
+    /* 
+    * update function is call for every frame and it update the position. Then we check for the collision  
+    * This is the function in which we are changing the poistion of entity with the help velocity.
+    */
     update(deltaTime) {
         this.entities.forEach(entity => {
             entity.update(deltaTime);
-
+            
             entity.pos.x += entity.vel.x * deltaTime;
             this.tileCollider.checkX(entity);
 
             entity.pos.y += entity.vel.y * deltaTime;
             this.tileCollider.checkY(entity);
+
+            /* 
+            * Here velocity is set to gravity after collision is check.
+            */
             entity.vel.y += this.gravity * deltaTime;
 
         });

@@ -24,7 +24,7 @@ export default class KeyBoardState {
         event.preventDefault();
         const keyState = event.type === 'keydown' ? PRESSED : RELEASED;
         /* 
-        * `handleEvent` function is called many thimes even if we press a key and do not release it.
+        * `handleEvent` function is called many times even if we press a key and do not release it.
         * it may lead to multiple times of calling of the function 'handleEvent'
         * to stop callback from running we check the state of the key.
         * If it is same as previous we do not do anything and if not we call the callback 

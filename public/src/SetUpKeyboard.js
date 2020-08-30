@@ -14,7 +14,7 @@ export default function setUpKeyBoard(mario) {
         mario.go.direction += keyState ? 1 : -1;
     });
     input.addMapping("KeyT", keyState => {
-        // We are adding keyState here to negate the the multiple key pressed at the same time.
+        // Turbo Speed fot the mario. HWen pressed mario pseed increase.
         mario.turbo(keyState);
     });
     input.addMapping("ArrowLeft", keyState => {

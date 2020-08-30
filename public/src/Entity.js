@@ -8,11 +8,9 @@ export class Trait {
     constructor(name) {
         this.NAME = name
     }
-
     // Needed to define in subclass if we want handle obstruct for that trait.
     obstruct () {
         console.warn('Unhandled update call in Trait');
-
     }
     update () {
         console.warn('Unhandled update call in Trait');
@@ -30,12 +28,10 @@ export class Entity {
         this.tarits = [];
 
     }
-
     addTrait(trait) {
         this.tarits.push(trait);
         this[trait.NAME] = trait; 
     }
-
     obstruct (side) {
         this.tarits.forEach(trait => {
             trait.obstruct(this, side);
