@@ -1,5 +1,5 @@
 import Timer from './Timer.js';
-import {loadLevel} from './loader.js';
+import {loadLevel} from './loaders/level.js';
 import {createMario} from './entities.js';
 import {createCollisionLayer, createCameraLayer} from './layers.js';
 import setUpKeyBoard from './SetUpKeyboard.js'

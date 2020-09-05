@@ -1,3 +1,5 @@
+import TileResolver from "./TileResolver.js";
+
 /* 
 * Here we are creating a HOF for backgound layer using pre-rendering.
 * @param level -- a instance of the level which coantin basic information about level
@@ -5,10 +7,10 @@
 * 
 * sprite ---- refernce to loaded image which refer to draw (Basic tile)
 */
-export function createBackgroundLayer(level, sprites) {
+export function createBackgroundLayer(level, tiles, sprites) {
     // TODO rename the buffer as sceneBuffer
-    const tiles = level.tiles;
-    const resolver = level.tileCollider.tiles;
+
+    const resolver = new TileResolver(tiles);
     const buffer = document.createElement("canvas");
     buffer.width = 256 + 16;
     buffer.height = 240;
@@ -19,21 +21,14 @@ export function createBackgroundLayer(level, sprites) {
     * As Camera position change we change the data in buffer and then redraw the background
     * 
     */
-    let startIndex, endIndex;
-    function redraw(drawFrom, drawTo) {
-        // function is run for first time 
-        // After that it check if camera is moving or position of camera is change
-        // if (startIndex === drawFrom && endIndex === drawTo) {
-        //     return;
-        // }
-        /* Need to remove above code as in case of other animtion like chance we need to update tile and Background */
-        startIndex = drawFrom;
-        endIndex = drawTo;
+
+    function redraw(startIndex, endIndex) {
+        context.clearRect(0, 0, buffer.width, buffer.height);
         for (let x = startIndex; x <= endIndex; ++x) {
             const col = tiles.grid[x];
             if (col) {
                 col.forEach((tile, y) => {
-                    if(sprites.animations.has(tile.name)) {
+                    if (sprites.animations.has(tile.name)) {
                         sprites.drawAnim(tile.name, context, x - startIndex, y, level.totalTime);
 
                     } else {
@@ -85,8 +80,8 @@ export function createCollisionLayer(level) {
     const tileResolver = level.tileCollider.tiles;
     const tileSize = tileResolver.tileSize;
     const getByIndexOriginal = tileResolver.getByIndex;
-    // Overrided the functon to store poistion when it call a every frame from Level class from update method
-    // We are storing poistion of entity (mario) at every frame and then calling original function.
+    // Overrided the functon to store position when it call a every frame from Level class from update method
+    // We are storing position of entity (mario) at every frame and then calling original function.
     tileResolver.getByIndex = function getByIndexfake(x, y) {
         resolvedTiles.push({ x, y });
         return getByIndexOriginal.call(tileResolver, x, y);

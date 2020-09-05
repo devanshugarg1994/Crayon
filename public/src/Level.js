@@ -1,5 +1,4 @@
 import Compositor from './Compositor.js';
-import {Matrix} from './math.js';
 import TileCollider from './TileCollider.js';
 export default class Level {  
     constructor() {
@@ -11,11 +10,21 @@ export default class Level {
         // Unique Entity used in Game level
         this.entities = new Set();
         // Dividing whole game scene into tiles to detect collision
-        this.tiles = new Matrix(); 
-        //
-        this.tileCollider = new TileCollider(this.tiles);
+        // this.tiles = new Matrix(); 
+        
+        // Store the information of matrix for checking collision.
+        this.tileCollider = null;
     }
 
+    /* 
+    * We have seprated the draw and collision matrix 
+    * For draw we use multilayer system but coliision detection we use single layre
+    * Hence the matrix passed contain whole in single matrix
+    * The matrix pass contain will update the matrix if another tile is updated on already pleaced tile
+    */
+    setCollisionGrid(matrix) {
+        this.tileCollider = new TileCollider(matrix);
+    }
 
     /* 
     * update function is call for every frame and it update the position. Then we check for the collision  
