@@ -75,5 +75,10 @@ Refactor createMario function.
 
 <br/>
 
+[Koopa and Goomba entity added](../../tree/32ad405bc21571bf914ace36ebcd0779889804a8)<br/>
+We have added Koopa and Goomba entity. Both entities have `pendulumWalk' trait.
+
+<br/>
+
 
 
