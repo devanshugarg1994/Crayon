@@ -56,7 +56,6 @@ export function loadSpriteSheet(name) {
                     sprites.defineAnim(animSpec.name, animation);
                 });
             }
-            console.log(sprites);
             return sprites;
         })
 

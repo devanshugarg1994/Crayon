@@ -20,13 +20,11 @@ export function loadLevel(name) {
                return mergedTiles.concat(layerSpec.tiles);
             }, []);
 
-            console.log(mergedTiles);
             const collisionGrid = createCollisionGrid(mergedTiles, levelSpec.patterns);
             level.setCollisionGrid(collisionGrid);     
             
             levelSpec.layers.forEach(layer => {
                 const backgroundGrid = createBackgroundGrid(layer.tiles, levelSpec.patterns);
-                console.log(backgroundGrid);
                 const backgroundLayer = createBackgroundLayer(level, backgroundGrid, backgroundSprite);
                 level.comp.layers.push(backgroundLayer);
     

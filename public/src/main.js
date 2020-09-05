@@ -1,6 +1,6 @@
 import Timer from './Timer.js';
 import {loadLevel} from './loaders/level.js';
-import {createMario} from './entities.js';
+import {loadMario} from './entities/Mario.js';
 import {createCollisionLayer, createCameraLayer} from './layers.js';
 import setUpKeyBoard from './SetUpKeyboard.js'
 import Camera from './Camera.js'
@@ -10,12 +10,13 @@ const canvas = document.getElementById('screen');
 const context = canvas.getContext('2d');
 // Parallel Loading of Sprites using Promise all
 Promise.all([
-    createMario(),
+    loadMario(),
     loadLevel('1-1'),
 ])
-.then(([mario, level]) => {
+.then(([createMario, level]) => {
     const camera = new Camera();
     window.camera = camera;
+    const mario = createMario()
     mario.pos.set(64, 64);
     // level.comp.layers.push(createCollisionLayer(level),
     //                     createCameraLayer(camera));
