@@ -70,12 +70,16 @@ export default class TileCollider {
                 if (entity.pos.x + entity.size.x > match.x1) {
                     entity.pos.x = match.x1 - entity.size.x;
                     entity.vel.x = 0;
+                    entity.obstruct(Sides.RIGHT);
+
 
                 }
             } else if (entity.vel.x < 0) {  // Since the Velocity negative mario is moving in Upward direction 
                 if (entity.pos.x < match.x2) {
                     entity.pos.x = match.x2;
                     entity.vel.x = 0;
+                    entity.obstruct(Sides.LEFT);
+
 
                 }
             }

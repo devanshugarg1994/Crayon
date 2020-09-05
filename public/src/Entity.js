@@ -2,7 +2,9 @@ import {Vec2} from './math.js'
 
 export const Sides = {
     TOP: Symbol('top'),
-    BOTTOM: Symbol('bottom')
+    BOTTOM: Symbol('bottom'),
+    RIGHT: Symbol('left'),
+    LEFT: Symbol('right')
 }
 export class Trait {
     constructor(name) {
@@ -26,7 +28,8 @@ export class Entity {
         this.size = new Vec2(0, 0);
         // Skill that a entity could have
         this.tarits = [];
-
+        //lifeTime of the entity. It is increasing time
+        this.lifeTime = 0;
     }
     addTrait(trait) {
         this.tarits.push(trait);
@@ -41,6 +44,8 @@ export class Entity {
         this.tarits.forEach(trait => {
             trait.update(this, deltaTime);
         });
+        // Increasing lifetime on every Update call. It is a infinite increasing value for the entity object
+        this.lifeTime += deltaTime;
     }
 
      
