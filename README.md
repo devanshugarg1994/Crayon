@@ -55,8 +55,16 @@ We have change mario constant speed on button press with a acceleration from 0 s
 update call which depend on the speed.
 Also A break frame is also added when mario instantaneously change it's direction. 
 <br/>
+
 [Mario Mechanics](../../tree/61b297b11f3c11ca9f3bcbbb2031d263b8ffc767)<br/>
 Mario Jump Improve
+<br/>
+
+
+[Background Layering](../../tree/e4d6b667fc14c7218fd43f5f5df1f0b69dd0604d)<br/>
+Till now we are rendering and calculating collision in a single layer<br/>
+Now we have break the rendering into multi layer system<br/>
+For collision we store the data of all layer in a single matrix  then check for collision.
 <br/>
 
 
