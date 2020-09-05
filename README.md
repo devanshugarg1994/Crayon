@@ -67,5 +67,13 @@ Now we have break the rendering into multi layer system<br/>
 For collision we store the data of all layer in a single matrix  then check for collision.
 <br/>
 
+[Refactor createMario function](../../tree/3cd71b470613691344dc6dd738ea767e81414df0)<br/>
+We have separated
+Loading of spriteSheet and creation of entites which are asynchronous earlier. Now creation of entites are now synchronous as now thenable return a function which is used in script to create the object(entities).<br/>
+Loading of sprite is still asynchronous.<br/>
+Refactor createMario function.
+
+<br/>
+
 
 
