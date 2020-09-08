@@ -1,5 +1,5 @@
 import TileResolver from "./TileResolver.js";
-import {Sides} from './Entity.js';
+import { Sides } from './Entity.js';
 export default class TileCollider {
     constructor(tileMatrix) {
         this.tiles = new TileResolver(tileMatrix);
@@ -13,30 +13,30 @@ export default class TileCollider {
         */
         let y;
         if (entity.vel.y > 0) {
-            y = entity.pos.y + entity.size.y;
+            y = entity.bounds.bottom;
         } else if (entity.vel.y < 0) {
-            y = entity.pos.y;
+            y = entity.bounds.top;
         } else {
             return;
         }
         // Getting the corresponding tile indexe or (indexes) which need to check 
 
-        const matches = this.tiles.searchByRange(entity.pos.x, entity.pos.x + entity.size.x, y, y);
+        const matches = this.tiles.searchByRange(entity.bounds.left, entity.bounds.right, y, y);
         matches.forEach(match => {
             if (match.tile.type !== 'ground') {
                 return;
             }
             // Since Velocity is positive it means the mario is moving downward
             if (entity.vel.y > 0) {
-                if (entity.pos.y + entity.size.y > match.y1) {
-                    entity.pos.y = match.y1 - entity.size.y;
+                if (entity.bounds.bottom > match.y1) {
+                    entity.bounds.bottom = match.y1;
                     entity.vel.y = 0;
                     entity.obstruct(Sides.BOTTOM);
 
                 }
             } else if (entity.vel.y < 0) {  // Since the Velocity negative mario is moving in Upward direction 
-                if (entity.pos.y < match.y2) {
-                    entity.pos.y = match.y2;
+                if (entity.bounds.top < match.y2) {
+                    entity.bounds.top = match.y2;
                     entity.vel.y = 0;
                     entity.obstruct(Sides.TOP);
 
@@ -52,9 +52,9 @@ export default class TileCollider {
         */
         let x;
         if (entity.vel.x > 0) {
-            x = entity.pos.x + entity.size.x;
+            x = entity.bounds.right;
         } else if (entity.vel.x < 0) {
-            x = entity.pos.x;
+            x = entity.bounds.left;
         } else {
             return;
         }
@@ -67,16 +67,17 @@ export default class TileCollider {
             }
             // Since Velocity is positive it means the mario is moving downward
             if (entity.vel.x > 0) {
-                if (entity.pos.x + entity.size.x > match.x1) {
-                    entity.pos.x = match.x1 - entity.size.x;
+                if (entity.bounds.right > match.x1) {
+                    entity.bounds.right = match.x1;
                     entity.vel.x = 0;
+
                     entity.obstruct(Sides.RIGHT);
 
 
                 }
             } else if (entity.vel.x < 0) {  // Since the Velocity negative mario is moving in Upward direction 
-                if (entity.pos.x < match.x2) {
-                    entity.pos.x = match.x2;
+                if (entity.bounds.left < match.x2) {
+                    entity.bounds.left = match.x2;
                     entity.vel.x = 0;
                     entity.obstruct(Sides.LEFT);
 

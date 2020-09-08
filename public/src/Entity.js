@@ -1,4 +1,5 @@
-import {Vec2} from './math.js'
+import { Vec2 } from './math.js'
+import BoundingBox from './BoundingBox.js';
 
 export const Sides = {
     TOP: Symbol('top'),
@@ -11,10 +12,10 @@ export class Trait {
         this.NAME = name
     }
     // Needed to define in subclass if we want handle obstruct for that trait.
-    obstruct () {
+    obstruct() {
         console.warn('Unhandled update call in Trait');
     }
-    update () {
+    update() {
         console.warn('Unhandled update call in Trait');
     }
 }
@@ -26,16 +27,25 @@ export class Entity {
         this.pos = new Vec2(0, 0);
         this.vel = new Vec2(0, 0);
         this.size = new Vec2(0, 0);
+        /* 
+        * offset is used to add to reduce the area used by entity for collision detection.
+        * if offset is zero the size and poistion of entity is used for collision detection
+        */
+        this.offset = new Vec2(0, 0);
         // Skill that a entity could have
         this.tarits = [];
         //lifeTime of the entity. It is increasing time
         this.lifeTime = 0;
+        this.bounds = new BoundingBox(this.pos, this.size, this.offset);
+        console.log(this.bounds)
+
+
     }
     addTrait(trait) {
         this.tarits.push(trait);
-        this[trait.NAME] = trait; 
+        this[trait.NAME] = trait;
     }
-    obstruct (side) {
+    obstruct(side) {
         this.tarits.forEach(trait => {
             trait.obstruct(this, side);
         });
@@ -48,5 +58,5 @@ export class Entity {
         this.lifeTime += deltaTime;
     }
 
-     
+
 }
