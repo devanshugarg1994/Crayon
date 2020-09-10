@@ -76,8 +76,20 @@ Refactor createMario function.
 <br/>
 
 [Koopa and Goomba entity added](../../tree/32ad405bc21571bf914ace36ebcd0779889804a8)<br/>
-We have added Koopa and Goomba entity. Both entities have `pendulumWalk' trait.
+We have added Koopa and Goomba entity. Both entities have `pendulumWalk` trait.
 
+<br/>
+
+
+[Bounding Box](../../tree/260db2f60bc85874177477b60dee5f1deb445ec7)<br/>
+We have added bounds which are updated when collision happen.<br/>
+Earlier we are updating entity(mario) position when we are checking for collision.<br/>
+But now we are updating the bounds<br/>
+Here BoundingBox take care us of the position, size of entity and the offset. 
+<br/>
+
+[Bounding Box2](../../tree/6547a5ea3270cc80401e87dde7d4c7ef2ace6ef2)<br/>
+Fix some errors
 <br/>
 
 
