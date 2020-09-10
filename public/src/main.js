@@ -1,35 +1,31 @@
 import Timer from './Timer.js';
 import {loadLevel} from './loaders/level.js';
-import {loadMario} from './entities/Mario.js';
-import {loadGoomba} from './entities/Goomba.js';
-import {loadKoopa} from './entities/Koopa.js';
+
 import {createCollisionLayer, createCameraLayer} from './layers.js';
 import setUpKeyBoard from './SetUpKeyboard.js'
 import Camera from './Camera.js'
 import setUpMouseControl from './Debug.js';
+import loadEntities from './entities.js';
 
 const canvas = document.getElementById('screen');
 const context = canvas.getContext('2d');
 // Parallel Loading of Sprites using Promise all
 Promise.all([
-    loadMario(),
-    loadGoomba(),
-    loadKoopa(),
+    loadEntities(),
     loadLevel('1-1'),
 ])
-.then(([createMario,createGoomba, createKoopa, level]) => {
+.then(([entitiesFactory, level]) => {
     const camera = new Camera();
     window.camera = camera;
-
-    const mario = createMario()
+    const mario = entitiesFactory.mario()
     mario.pos.set(64, 64);
     level.entities.add(mario);
 
-    const goomba = createGoomba();
+    const goomba = entitiesFactory.goomba();
     goomba.pos.x = 250;
-    // level.entities.add(goomba);  
+    level.entities.add(goomba);  
     
-    const koopa = createKoopa();
+    const koopa = entitiesFactory.koopa();
     koopa.pos.x = 260;
     level.entities.add(koopa);
 

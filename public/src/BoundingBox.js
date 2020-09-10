@@ -1,4 +1,11 @@
 export default class BoundingBox {
+    /*
+    *@param : pos - It is a refernce of the object for position mentioned in the Entity class.
+              size - It is refernce object for size mentioned in the Entity class.
+              offset - It is a reference object for the offset. 
+
+    */
+
     constructor(pos, size, offset) {
         this.pos = pos;
         this.size = size;
