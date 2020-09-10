@@ -26,20 +26,22 @@ export class Entity {
     constructor(x, y) {
         this.pos = new Vec2(0, 0);
         this.vel = new Vec2(0, 0);
+        /* 
+        * It is the size of entity which we want to consider i.e.. area we will consider for collision
+        * In case size of entity and collison area have some difference example `koopa` we set the size value to the collision value.
+        * And to calculate the the poistion correctly we define the `offset`. 
+        */
         this.size = new Vec2(0, 0);
         /* 
-        * offset is used to add to reduce the area used by entity for collision detection.
+        * offset is extra area which is added to calculate the corner points around the entity.
         * if offset is zero the size and poistion of entity is used for collision detection
         */
         this.offset = new Vec2(0, 0);
         // Skill that a entity could have
         this.tarits = [];
-        //lifeTime of the entity. It is increasing time
+        //lifeTime of the entity. It is structly increasing with time
         this.lifeTime = 0;
         this.bounds = new BoundingBox(this.pos, this.size, this.offset);
-        console.log(this.bounds)
-
-
     }
     addTrait(trait) {
         this.tarits.push(trait);

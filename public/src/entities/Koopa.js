@@ -20,7 +20,9 @@ function createKoopaFactory(sprite) {
     // callback that actually create the entity.
     return function createKoopa() {
         const koopa = new Entity();
-        koopa.size.set(16, 24);
+        koopa.size.set(16, 16);
+        koopa.offset.y = 8;
+
         koopa.addTrait(new PendulumWalk());
         koopa.draw = drawKoopa;
         return koopa;

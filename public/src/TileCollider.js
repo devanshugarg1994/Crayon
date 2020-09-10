@@ -21,7 +21,8 @@ export default class TileCollider {
         }
         // Getting the corresponding tile indexe or (indexes) which need to check 
 
-        const matches = this.tiles.searchByRange(entity.bounds.left, entity.bounds.right, y, y);
+        const matches = this.tiles.searchByRange(entity.bounds.left, 
+            entity.bounds.right, y, y);
         matches.forEach(match => {
             if (match.tile.type !== 'ground') {
                 return;
@@ -60,7 +61,10 @@ export default class TileCollider {
         }
 
         // Getting the corresponding tile indexe or (indexes) which need to check 
-        const matches = this.tiles.searchByRange(x, x, entity.pos.y, entity.pos.y + entity.size.y);
+
+        const matches = this.tiles.searchByRange(
+            x, x,
+            entity.bounds.top, entity.bounds.bottom);
         matches.forEach(match => {
             if (match.tile.type !== 'ground') {
                 return;
