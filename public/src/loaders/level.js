@@ -4,36 +4,55 @@ import { loadJSON, loadSpriteSheet } from '../loader.js'
 import { Matrix } from '../math.js';
 
 
+function setUpCollision(levelSpec, level) {
+    const mergedTiles = levelSpec.layers.reduce((mergedTiles, layerSpec) => {
+        return mergedTiles.concat(layerSpec.tiles);
+    }, []);
+
+    const collisionGrid = createCollisionGrid(mergedTiles, levelSpec.patterns);
+    level.setCollisionGrid(collisionGrid);
+}
+
+function setUpBackgrounds(levelSpec, level, backgroundSprite) {
+    levelSpec.layers.forEach(layer => {
+        const backgroundGrid = createBackgroundGrid(layer.tiles, levelSpec.patterns);
+        const backgroundLayer = createBackgroundLayer(level, backgroundGrid, backgroundSprite);
+        level.comp.layers.push(backgroundLayer);
+
+    });
+}
+
+function setUpEntities(levelSpec, level, entitiesFactory) {
+
+    levelSpec.entities.forEach(({name, pos: [x, y]}) => {
+        const createEntity = entitiesFactory[name];
+        const entity = createEntity();
+        entity.pos.set(x, y);
+        level.entities.add(entity);
+    })
+    const spriteLayer = createSpriteLayer(level.entities);
+    level.comp.layers.push(spriteLayer);
+}
 /* 
 * A loading function which load everything needed in the level
 */
-export function loadLevel(name) {
-    return loadJSON(`/levelJSON/${name}.json`)
-        .then(levelSpec => Promise.all([
-            levelSpec,
-            loadSpriteSheet(levelSpec.levelName)
-        ]))
-        .then(([levelSpec, backgroundSprite]) => {
-            const level = new Level();
+export function createLevelLoader(entitiesFactory) {
+    return function loadLevel(name) {
+        return loadJSON(`/levelJSON/${name}.json`)
+            .then(levelSpec => Promise.all([
+                levelSpec,
+                loadSpriteSheet(levelSpec.levelName)
+            ]))
+            .then(([levelSpec, backgroundSprite]) => {
+                const level = new Level();
+                setUpCollision(levelSpec, level);
+                setUpBackgrounds(levelSpec, level, backgroundSprite);
+                setUpEntities(levelSpec, level, entitiesFactory);
 
-            const mergedTiles = levelSpec.layers.reduce((mergedTiles, layerSpec) => {
-               return mergedTiles.concat(layerSpec.tiles);
-            }, []);
 
-            const collisionGrid = createCollisionGrid(mergedTiles, levelSpec.patterns);
-            level.setCollisionGrid(collisionGrid);     
-            
-            levelSpec.layers.forEach(layer => {
-                const backgroundGrid = createBackgroundGrid(layer.tiles, levelSpec.patterns);
-                const backgroundLayer = createBackgroundLayer(level, backgroundGrid, backgroundSprite);
-                level.comp.layers.push(backgroundLayer);
-    
+                return level;
             });
-
-            const spriteLayer = createSpriteLayer(level.entities);
-            level.comp.layers.push(spriteLayer);
-            return level;
-        });
+    }
 }
 
 // Calculating the indexes which can be used to map in the matrix as hole game is dividd into the matrix.
