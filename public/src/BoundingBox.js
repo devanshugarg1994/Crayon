@@ -12,6 +12,16 @@ export default class BoundingBox {
         this.offset = offset;
     }
 
+    /* 
+    * We are checking the rectangle collision of 2 entity and returning true if they are colliding.
+    */
+
+    overlaps(box) {
+        return this.bottom > box.top &&
+            this.top < box.bottom &&
+            this.right > box.left &&
+            this.left < box.left;
+    }
     get bottom() {
         return this.pos.y + this.size.y + this.offset.y;
     }

@@ -1,5 +1,6 @@
 import Compositor from './Compositor.js';
 import TileCollider from './TileCollider.js';
+import EntityCollider from './EntityCollider.js';
 export default class Level {  
     constructor() {
         this.gravity = 1500;
@@ -14,6 +15,8 @@ export default class Level {
         
         // Store the information of matrix for checking collision.
         this.tileCollider = null;
+
+        this.entityCollider = new EntityCollider(this.entities);
     }
 
     /* 
@@ -32,13 +35,14 @@ export default class Level {
     */
     update(deltaTime) {
         this.entities.forEach(entity => {
-            entity.update(deltaTime);
+            entity.update(deltaTime, this);
             
             entity.pos.x += entity.vel.x * deltaTime;
             this.tileCollider.checkX(entity);
 
-            entity.pos.y += entity.vel.y * deltaTime;
+            entity.pos.y += entity.vel.y * deltaTime; 
             this.tileCollider.checkY(entity);
+
 
             /* 
             * Here velocity is set to gravity after collision is check.
@@ -46,6 +50,10 @@ export default class Level {
             entity.vel.y += this.gravity * deltaTime;
 
         });
+
+        this.entities.forEach(entity => {
+            this.entityCollider.check(entity);
+        })
 
         this.totalTime += deltaTime;
     }

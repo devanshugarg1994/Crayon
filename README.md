@@ -92,5 +92,9 @@ Here BoundingBox take care us of the position, size of entity and the offset.
 Fix some errors
 <br/>
 
+[Factory created for craetion of entites](../../tree/3041d43dc48b01d50561ef61d82cba35a145b3f9)<br/>
+Fix some errors
+<br/>
+
 
 

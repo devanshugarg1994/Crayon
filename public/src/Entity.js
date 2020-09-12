@@ -13,10 +13,12 @@ export class Trait {
     }
     // Needed to define in subclass if we want handle obstruct for that trait.
     obstruct() {
-        console.warn('Unhandled update call in Trait');
     }
     update() {
-        console.warn('Unhandled update call in Trait');
+    }
+
+    collides(us, them) {
+        console.log(this.NAME, "---------------Collide is not define------------------")
     }
 }
 /* 
@@ -47,14 +49,24 @@ export class Entity {
         this.tarits.push(trait);
         this[trait.NAME] = trait;
     }
+
+    /*
+    * Check collision for every trait i.e.. effect on every trait when 2 entity interaact
+    */
+
+    collides(candidate) {
+        this.tarits.forEach(trait => {
+            trait.collides(this, candidate);
+        });
+    }
     obstruct(side) {
         this.tarits.forEach(trait => {
             trait.obstruct(this, side);
         });
     }
-    update(deltaTime) {
+    update(deltaTime, level) {
         this.tarits.forEach(trait => {
-            trait.update(this, deltaTime);
+            trait.update(this, deltaTime, level);
         });
         // Increasing lifetime on every Update call. It is a infinite increasing value for the entity object
         this.lifeTime += deltaTime;
