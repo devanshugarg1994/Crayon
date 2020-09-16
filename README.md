@@ -92,8 +92,22 @@ Here BoundingBox take care us of the position, size of entity and the offset.
 Fix some errors
 <br/>
 
-[Factory created for craetion of entites](../../tree/3041d43dc48b01d50561ef61d82cba35a145b3f9)<br/>
-Fix some errors
+[Factory created for creation of entites](../../tree/3041d43dc48b01d50561ef61d82cba35a145b3f9)<br/>
+Created Factory which will create the entity<br/>
+Creation of entity include loading of spritesheet and ceartion of ib=nstance of the entity and setting property.
+<br/>
+A function is return by the promise which now can craete entity by using key(entity name). 
+<br/>
+
+[Mario Goomba Interaction](../../tree/c2b170096e83d3f5a6ca1ab5afd018561f3833d4)<br/>
+We have include killable trait and collision effect between mario and goomba.
+<br/>
+Animation of goomba are updated and even killed when mario and goomb interact.  
+<br/>
+
+[Player Controller](../../tree/60a3002d270512b9a6e252c16716fd22d96839ab)<br/>
+When mario die we need to revive it. For that we need a controller which will handle the inclusion of mario again in GameScene.<br/>
+Player controller control the inclusion and position of enity when the scene start.
 <br/>
 
 
