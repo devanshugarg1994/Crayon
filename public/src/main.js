@@ -6,7 +6,19 @@ import setUpKeyBoard from './SetUpKeyboard.js'
 import Camera from './Camera.js'
 import setUpMouseControl from './Debug.js';
 import loadEntities from './entities.js';
+import { Entity } from './Entity.js';
+import PlayerController from './traits/PlayerController.js.js';
 
+
+function createPlayerEnv(playerEntity) {
+    const playerEnv = new Entity();
+    const playerControl = new PlayerController();
+    playerControl.setPlayer(playerEntity);
+    playerEnv.addTrait(playerControl);
+    playerControl.checkpoint.set(64, 64)
+
+    return playerEnv;
+}
 // Parallel Loading of Sprites using Promise all
 async function main (canvas) {
     const context = canvas.getContext('2d');
@@ -18,10 +30,10 @@ async function main (canvas) {
     const camera = new Camera();
     window.camera = camera;
     const mario = entitiesFactory.mario()
-    mario.pos.set(64, 64);
-    level.entities.add(mario);
 
-  
+
+    const playerEnv = createPlayerEnv(mario);
+    level.entities.add(playerEnv);
 
 
     level.comp.layers.push(createCollisionLayer(level),
@@ -37,7 +49,7 @@ async function main (canvas) {
         level.update(deltaTime);
         level.comp.draw(context, camera);
         if(mario.pos.x > 100) {
-            camera.pos.x = mario.pos.x - 100;
+            camera.pos.x = Math.max(0, mario.pos.x - 100);
 
         }
     }

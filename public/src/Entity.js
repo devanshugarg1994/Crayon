@@ -51,9 +51,8 @@ export class Entity {
     }
 
     /*
-    * Check collision for every trait i.e.. effect on every trait when 2 entity interaact
+    * Check collision for every trait i.e.. effect on every trait when 2 entity interact
     */
-
     collides(candidate) {
         this.tarits.forEach(trait => {
             trait.collides(this, candidate);
@@ -72,5 +71,13 @@ export class Entity {
         this.lifeTime += deltaTime;
     }
 
+    /* 
+    * when we create a entity which do conatin a draw call
+    * Generally a entity draw function is created when we create entitty whic compose sprite instance.
+    * We define a wrapper function `draw` around the composed sprite instance and call draw using sprite function.
+    */
+    draw() {
+        // Empty and use entity which do not conatin sprite 
+    }
 
 }
