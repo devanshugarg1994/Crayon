@@ -25,7 +25,7 @@ class Bheaviour extends Trait {
         if (us.killable.dead) {
             return;
         }
-        // update collison effect only if the entity inteacted has stomper property (mario) and for other we iognore
+        // update collison effect only if the entity inteacted has stomper property (mario) and for other we ignore.
         if (them.stomper) {
             if (them.vel.y != us.vel.y) {
                 this.handleStomp(us, them);
@@ -36,7 +36,7 @@ class Bheaviour extends Trait {
         }
     }
 
-    // Collison in X direction depending on state of koopa
+    // Collison in X direction depending on state of koopa.
     handleNudge(us, them) {
         if (this.state === STATE_WALKING) {
             them.killable.kill();
@@ -47,7 +47,7 @@ class Bheaviour extends Trait {
             them.killable.kill();
         }
     }
-    // Collision in Y direction depending omn state of koopa
+    // Collision in Y direction depending omn state of koopa.
     handleStomp(us, them) {
         if (this.state === STATE_WALKING) {
             this.hide(us);

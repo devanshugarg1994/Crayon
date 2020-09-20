@@ -110,5 +110,10 @@ When mario die we need to revive it. For that we need a controller which will ha
 Player controller control the inclusion and position of enity when the scene start.
 <br/>
 
+[Koopa Intreaction](../../tree/44d5de163ac224a71c84b75d01cedc0995d51341)<br/>
+Koopa has multiple state on which the intreaction depends.<br/>
+
+<br/>
+
 
 
