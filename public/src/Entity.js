@@ -10,13 +10,16 @@ export const Sides = {
 export class Trait {
     constructor(name) {
         this.NAME = name
+
     }
     // Needed to define in subclass if we want handle obstruct for that trait.
     obstruct() {
     }
+
+    // Properties updated on every upadte call 
     update() {
     }
-
+    // effect of cillision on ther trait 
     collides(us, them) {
         console.log(this.NAME, "---------------Collide is not define------------------")
     }
@@ -28,6 +31,8 @@ export class Entity {
     constructor(x, y) {
         this.pos = new Vec2(0, 0);
         this.vel = new Vec2(0, 0);
+        // Disable collision for the entity
+        this.canCollide = true;
         /* 
         * It is the size of entity which we want to consider i.e.. area we will consider for collision
         * In case size of entity and collison area have some difference example `koopa` we set the size value to the collision value.
@@ -51,6 +56,7 @@ export class Entity {
     }
 
     /*
+    * this function is called from Level class on evry update call for evey entity
     * Check collision for every trait i.e.. effect on every trait when 2 entity interact
     */
     collides(candidate) {
@@ -63,6 +69,10 @@ export class Entity {
             trait.obstruct(this, side);
         });
     }
+
+    /*
+    * update properties for every trait i.e.. effect on every trait when 2 entity interact
+    */
     update(deltaTime, level) {
         this.tarits.forEach(trait => {
             trait.update(this, deltaTime, level);
@@ -73,7 +83,7 @@ export class Entity {
 
     /* 
     * when we create a entity which do conatin a draw call
-    * Generally a entity draw function is created when we create entitty whic compose sprite instance.
+    * Generally a entity draw function is created when we create entity which compose sprite instance.
     * We define a wrapper function `draw` around the composed sprite instance and call draw using sprite function.
     */
     draw() {

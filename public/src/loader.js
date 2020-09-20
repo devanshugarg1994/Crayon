@@ -17,7 +17,7 @@ export function loadImage(url) {
 }
 
 /* 
-* A utility function to add JSON
+* A utility function to load JSON
 */
 export function loadJSON(url) {
     return fetch(url)

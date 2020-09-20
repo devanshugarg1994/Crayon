@@ -1,21 +1,21 @@
 import Compositor from './Compositor.js';
 import TileCollider from './TileCollider.js';
 import EntityCollider from './EntityCollider.js';
-export default class Level {  
+export default class Level {
     constructor() {
         this.gravity = 1500;
         // total time in the level 
         this.totalTime = 0;
         // Layering the componenet need to draw
-        this.comp = new Compositor(); 
+        this.comp = new Compositor();
         // Unique Entity used in Game level
         this.entities = new Set();
         // Dividing whole game scene into tiles to detect collision
         // this.tiles = new Matrix(); 
-        
+
         // Store the information of matrix for checking collision.
         this.tileCollider = null;
-
+        // It contain list of entity which we need to check for intreaction.
         this.entityCollider = new EntityCollider(this.entities);
     }
 
@@ -36,12 +36,17 @@ export default class Level {
     update(deltaTime) {
         this.entities.forEach(entity => {
             entity.update(deltaTime, this);
-            
-            entity.pos.x += entity.vel.x * deltaTime;
-            this.tileCollider.checkX(entity);
 
-            entity.pos.y += entity.vel.y * deltaTime; 
-            this.tileCollider.checkY(entity);
+            entity.pos.x += entity.vel.x * deltaTime;
+            if (entity.canCollide) {
+                this.tileCollider.checkX(entity);
+            }
+
+
+            entity.pos.y += entity.vel.y * deltaTime;
+            if (entity.canCollide) {
+                this.tileCollider.checkY(entity);
+            }
 
 
             /* 
@@ -51,8 +56,13 @@ export default class Level {
 
         });
 
+        /* 
+        * We check entity interaction.
+        */
         this.entities.forEach(entity => {
-            this.entityCollider.check(entity);
+            if (entity.canCollide) {
+                this.entityCollider.check(entity);
+            }
         })
 
         this.totalTime += deltaTime;

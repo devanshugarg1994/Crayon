@@ -19,7 +19,7 @@ export default class TileCollider {
         } else {
             return;
         }
-        // Getting the corresponding tile indexe or (indexes) which need to check 
+        // Getting the corresponding tile index or (indexes) which need to check 
 
         const matches = this.tiles.searchByRange(entity.bounds.left, 
             entity.bounds.right, y, y);
