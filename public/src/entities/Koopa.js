@@ -2,6 +2,8 @@ import { Sides, Entity, Trait } from '../Entity.js';
 import { loadSpriteSheet } from '../loader.js'
 import Killable from '../traits/Killable.js';
 import PendulumWalk from "../traits/PendulumWalk.js";
+import Physics from '../traits/Physics.js';
+import Solid from '../traits/Solid.js';
 export function loadKoopa() {
     return loadSpriteSheet('koopa')
         .then(createKoopaFactory)
@@ -53,7 +55,7 @@ class Bheaviour extends Trait {
             this.hide(us);
         } else if (this.state === STATE_HIDING) {
             us.killable.kill();
-            us.canCollide = false;
+            us.solid.obstructs = false;
             us.vel.set(100, -200);
         } else if (this.state === STATE_PANIC) {
             this.hide(us);
@@ -111,6 +113,8 @@ function createKoopaFactory(sprite) {
         const koopa = new Entity();
         koopa.size.set(16, 16);
         koopa.offset.y = 8;
+        koopa.addTrait(new Physics());
+        koopa.addTrait(new Solid());
         koopa.addTrait(new PendulumWalk());
         koopa.addTrait(new Bheaviour());
         koopa.addTrait(new Killable());

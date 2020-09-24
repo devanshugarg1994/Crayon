@@ -37,18 +37,6 @@ export default class Level {
         this.entities.forEach(entity => {
             entity.update(deltaTime, this);
 
-            entity.pos.x += entity.vel.x * deltaTime;
-            if (entity.canCollide) {
-                this.tileCollider.checkX(entity);
-            }
-
-
-            entity.pos.y += entity.vel.y * deltaTime;
-            if (entity.canCollide) {
-                this.tileCollider.checkY(entity);
-            }
-
-
             /* 
             * Here velocity is set to gravity after collision is check.
             */
@@ -60,10 +48,15 @@ export default class Level {
         * We check entity interaction.
         */
         this.entities.forEach(entity => {
-            if (entity.canCollide) {
-                this.entityCollider.check(entity);
-            }
-        })
+            this.entityCollider.check(entity);
+        });
+
+        /* 
+        * Excute the task are are enqueue to be excuted last in updation cycle for each entity
+        */
+        this.entities.forEach(entity => {
+            entity.finalize();
+        });
 
         this.totalTime += deltaTime;
     }
