@@ -36,8 +36,8 @@ async function main (canvas) {
     level.entities.add(playerEnv);
 
 
-    level.comp.layers.push(createCollisionLayer(level),
-                        createCameraLayer(camera));
+    // level.comp.layers.push(createCollisionLayer(level),
+    //                     createCameraLayer(camera));
 
     const input = setUpKeyBoard(mario);
     input.listenTo(window);

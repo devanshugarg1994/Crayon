@@ -8,7 +8,7 @@ export default class Jump extends Trait {
         // Velocity of the jump
         this.velocity = 200;
         this.engagedTime = 0;
-        // We are able to jump only when `ready` is 0. In other case jump will not work
+        // We are able to jump only when `ready` is 1. In other case jump will not work
         this.ready = 0;
         // When we press jump button and mario is in Air and coming down we have some grace Time
         // Grace Time : Is the time when mario is in Air but we want to allow jump again (As player could press it little before it hit ground)
