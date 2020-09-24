@@ -20,6 +20,7 @@ Now just have to mentioned the changes and call start to render and update the g
 <img src="https://github.com/devanshugarg1994/Crayon/blob/master/Docs/Jump.png" /><br/>
 
 [Level Class and Refactor](../../tree/381677ed31d640e866c48e87033de39ada91bea0)<br/><br/>
+
 [Collision](../../tree/7aafc822ed6fb121f1826c04ebb6471471babd44)<br/>
 We have create 2 classes TIleCollider and TileResolver <br/>
 TileResolver : contain function that connvert or map position into scene matrix indexes and vice versa.<br/>
@@ -28,6 +29,7 @@ Level contain TileCollider instance as data memeber and check for collision for 
 
 [Collision Optimize and Refactor](../../tree/66d6b24860ad27d7126ef365be8e5cd99cdb376f)<br/>
 Now we will only check boder of entity (mario) for collision.<br/>
+
 [Camera](../../tree/98ef68f066d872b97e7ad9ec170ccd962e24024c)<br/>
 Added Camera component. Camera is just component which determine the position on the canvas of other component to be darwn like background ,entity (mario). <br/>
 When camera shift we just shift the position of other component accordingly.
@@ -127,6 +129,8 @@ Solid tarit check the collision with enviornment. Disabling this trait will make
 <br/>
 
 [Game Presentation](../../tree/02599f20cc83fb99153a93322d4350527f1f4f24)<br/>
+<img src="https://github.com/devanshugarg1994/Crayon/blob/master/Docs/GamePresenatation.png" />
+<br/>
 Game rendering is pixlated(using CSS propety) and  cover 100% of view port. Game is centred w.rt. screen.
 <br/>
 
