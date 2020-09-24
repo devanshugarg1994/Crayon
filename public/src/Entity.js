@@ -9,7 +9,8 @@ export const Sides = {
 }
 export class Trait {
     constructor(name) {
-        this.NAME = name
+        this.NAME = name;
+        this.tasks = [];
 
     }
     // Needed to define in subclass if we want handle obstruct for that trait.
@@ -19,9 +20,21 @@ export class Trait {
     // Properties updated on every upadte call 
     update() {
     }
-    // effect of cillision on ther trait 
+    // effect of collision ther trait 
     collides(us, them) {
         console.log(this.NAME, "---------------Collide is not define------------------")
+    }
+    // Task pending which need to exceute in the last for a updation cycle.
+    queue(task) {
+        this.tasks.push(task);
+    }
+
+    // Excecuting task which are enqeue to excute in the last in the updation cycle in the trait.
+    finalize() {
+        this.tasks.forEach(task => {
+            task();
+        });
+        this.tasks.length = 0;
     }
 }
 /* 
@@ -31,8 +44,6 @@ export class Entity {
     constructor(x, y) {
         this.pos = new Vec2(0, 0);
         this.vel = new Vec2(0, 0);
-        // Disable collision for the entity
-        this.canCollide = true;
         /* 
         * It is the size of entity which we want to consider i.e.. area we will consider for collision
         * In case size of entity and collison area have some difference example `koopa` we set the size value to the collision value.
@@ -64,9 +75,9 @@ export class Entity {
             trait.collides(this, candidate);
         });
     }
-    obstruct(side) {
+    obstruct(side, match) {
         this.tarits.forEach(trait => {
-            trait.obstruct(this, side);
+            trait.obstruct(this, side, match);
         });
     }
 
@@ -79,6 +90,14 @@ export class Entity {
         });
         // Increasing lifetime on every Update call. It is a infinite increasing value for the entity object
         this.lifeTime += deltaTime;
+    }
+    /* 
+    * For every tarit exist in entity we check and execute the qeued task which need to excuted last in the updation cycle
+    */
+    finalize() {
+        this.tarits.forEach(trait => {
+            trait.finalize();
+        });
     }
 
     /* 
