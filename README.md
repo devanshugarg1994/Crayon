@@ -115,5 +115,20 @@ Koopa has multiple state on which the intreaction depends.<br/>
 
 <br/>
 
+[Queue Task](../../tree/8206376a20f2ce7d913d61d59ede10106ac0a4c1)<br/>
+There are certain task that need to be formed at the end of update cycle<br/>
+But all these are spread across many classes and function. So we enqueue these task in a array `tasks' and excute these at the end of updation cycle.
+<br/>
+
+[Solid and  Physics](../../tree/91f6284e4e5a2b6800225e140dce13a0ecef6d49)<br/>
+We have created 2 traits which control the the physics and collision of entity wih the enviornment.
+Physics tarit check the coliision and provide gravity to entity.<br/>
+Solid tarit check the collision with enviornment. Disabling this trait will make entity non-intreative with surrounding.
+<br/>
+
+[Game Presentation](../../tree/02599f20cc83fb99153a93322d4350527f1f4f24)<br/>
+Game rendering is pixlated(using CSS propety) and  cover 100% of view port. Game is centred w.rt. screen.
+<br/>
+
 
 
