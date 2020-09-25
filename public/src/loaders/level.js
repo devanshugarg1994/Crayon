@@ -4,6 +4,10 @@ import { loadJSON, loadSpriteSheet } from '../loader.js'
 import { Matrix } from '../math.js';
 
 
+/*
+* We combine all Json Backgrounds layer and entity layer becuae to calcualte collision we need only one grid.
+*/
+
 function setUpCollision(levelSpec, level) {
     const mergedTiles = levelSpec.layers.reduce((mergedTiles, layerSpec) => {
         return mergedTiles.concat(layerSpec.tiles);
@@ -55,7 +59,7 @@ export function createLevelLoader(entitiesFactory) {
     }
 }
 
-// Calculating the indexes which can be used to map in the matrix as hole game is dividd into the matrix.
+// Calculating the indexes which can be used to map in the matrix as hole game is divided into the matrix.
 function* expandSpan(xStart, xLen, yStart, yLen) {
     const xEnd = xStart + xLen;
     const yEnd = yStart + yLen;
