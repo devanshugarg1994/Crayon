@@ -135,4 +135,10 @@ Game rendering is pixlated(using CSS propety) and  cover 100% of view port. Game
 <br/>
 
 
+[Refator Layer.js](../../tree/df58d23e092472ac5afb82769e72778520f53ac4)<br/>
+<br/>
+Break Layer.js into multiple fiiles
+<br/>
+
+
 
