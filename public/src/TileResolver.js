@@ -12,8 +12,8 @@ export default class TileResolver {
         return Math.floor(pos / this.tileSize);
     }
     /* 
-    * toIndexRange take 2 position parameter pos1, pos2, where pos2 > pos2
-    * It take 2 position and return an array which contain rage of indexes 
+    * toIndexRange take 2 position parameter pos1, pos2, where pos2 > pos1
+    * It take 2 position and return an array which contain range of indexes 
     * between these position.
     */
     toIndexRange(pos1, pos2) {

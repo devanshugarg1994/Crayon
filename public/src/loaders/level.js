@@ -1,8 +1,8 @@
 import Level from '../Level.js';
-import { createBackgroundLayer, createSpriteLayer, createCollisionLayer } from '../Layers.js';
 import { loadJSON, loadSpriteSheet } from '../loader.js'
 import { Matrix } from '../math.js';
-
+import {createBackgroundLayer} from '../layers/backgroundLayer.js'
+import {createSpriteLayer} from '../layers/spriteLayer.js'
 
 /*
 * We combine all Json Backgrounds layer and entity layer becuae to calcualte collision we need only one grid.

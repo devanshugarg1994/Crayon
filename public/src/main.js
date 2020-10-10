@@ -1,13 +1,14 @@
 import Timer from './Timer.js';
 import {createLevelLoader } from './loaders/level.js';
 
-import {createCollisionLayer, createCameraLayer} from './layers.js';
 import setUpKeyBoard from './SetUpKeyboard.js'
 import Camera from './Camera.js'
 import setUpMouseControl from './Debug.js';
 import loadEntities from './entities.js';
 import { Entity } from './Entity.js';
 import PlayerController from './traits/PlayerController.js.js';
+import { createCollisionLayer } from './layers/collisionLayer.js';
+import { createCameraLayer } from './layers/cameraLayer.js';
 
 
 function createPlayerEnv(playerEntity) {
@@ -36,8 +37,8 @@ async function main (canvas) {
     level.entities.add(playerEnv);
 
 
-    // level.comp.layers.push(createCollisionLayer(level),
-    //                     createCameraLayer(camera));
+    level.comp.layers.push(createCollisionLayer(level),
+                        createCameraLayer(camera));
 
     const input = setUpKeyBoard(mario);
     input.listenTo(window);
