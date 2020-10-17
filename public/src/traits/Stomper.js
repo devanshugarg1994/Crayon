@@ -7,6 +7,10 @@ export default class Stomper extends Trait {
         this.bounceSpeed = 400;
 
     }
+
+    onStomped(us, them){
+
+    }
     
     bounce(us, them) {
         us.bounds.bottom = them.bounds.top;
@@ -15,6 +19,7 @@ export default class Stomper extends Trait {
     collides(us, them) {
         if (them.killable && !them.killable.dead && us.vel.y > them.vel.y) {
             this.bounce(us, them);
+            this.onStomped(us, them);
         }
     }
 

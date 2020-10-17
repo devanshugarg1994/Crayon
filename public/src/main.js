@@ -1,5 +1,6 @@
 import Timer from './Timer.js';
-import {createLevelLoader } from './loaders/level.js';
+import { createLevelLoader } from './loaders/level.js';
+import { loadFont } from './loaders/font.js';
 
 import setUpKeyBoard from './SetUpKeyboard.js'
 import Camera from './Camera.js'
@@ -9,7 +10,7 @@ import { Entity } from './Entity.js';
 import PlayerController from './traits/PlayerController.js.js';
 import { createCollisionLayer } from './layers/collisionLayer.js';
 import { createCameraLayer } from './layers/cameraLayer.js';
-
+import { createDashBoardLayer } from './layers/dashBoardLayer.js.js';
 
 function createPlayerEnv(playerEntity) {
     const playerEnv = new Entity();
@@ -21,10 +22,13 @@ function createPlayerEnv(playerEntity) {
     return playerEnv;
 }
 // Parallel Loading of Sprites using Promise all
-async function main (canvas) {
+async function main(canvas) {
     const context = canvas.getContext('2d');
 
-    const entitiesFactory = await loadEntities();
+    const [entitiesFactory, fontSprite] = await Promise.all([
+        loadEntities(),
+        loadFont()
+    ]);
     const loadlevel = await createLevelLoader(entitiesFactory);
     const level = await loadlevel('1-1');
 
@@ -38,18 +42,19 @@ async function main (canvas) {
 
 
     level.comp.layers.push(createCollisionLayer(level),
-                        createCameraLayer(camera));
+        createCameraLayer(camera),
+        createDashBoardLayer(fontSprite, playerEnv));
 
     const input = setUpKeyBoard(mario);
     input.listenTo(window);
     // setUpMouseControl(canvas, mario, camera);
-    const timer = new Timer(1/60);
+    const timer = new Timer(1 / 60);
     // Defining the update require in every frame
     // We only define it. It is called from Timer class
     timer.update = function update(deltaTime) {
         level.update(deltaTime);
         level.comp.draw(context, camera);
-        if(mario.pos.x > 100) {
+        if (mario.pos.x > 100) {
             camera.pos.x = Math.max(0, mario.pos.x - 100);
 
         }
