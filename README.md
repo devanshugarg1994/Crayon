@@ -137,7 +137,14 @@ Game rendering is pixlated(using CSS propety) and  cover 100% of view port. Game
 
 [Refator Layer.js](../../tree/df58d23e092472ac5afb82769e72778520f53ac4)<br/>
 <br/>
-Break Layer.js into multiple fiiles
+Break Layer.js into multiple files
+<br/>
+
+[Font](../../tree/ae62501ec77d9ec9837dcbd07fc9a175a107e9e1)<br/>
+<br/>
+Added Dashboad.js that handle the rendering of dashBoard on screen.<br/>
+We have loader function function to load fond and map the sprite with text in it with aprropriate frame size and position
+
 <br/>
 
 
